@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>이용호 · AI Engineer</title>
+<meta name="description" content="이용호 — AI Engineer 포트폴리오 인트로">
+<meta property="og:title" content="이용호 · AI Engineer">
+<meta property="og:description" content="모델을 만들고, 현장에서 쓰이게 합니다.">
+<meta property="og:image" content="poster.jpg">
+<style>
+  html,body{margin:0;height:100%;background:#0B0D14;}
+  body{display:flex;align-items:center;justify-content:center;font-family:system-ui,-apple-system,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;}
+  .wrap{position:relative;width:100%;max-width:calc(100vh * 16 / 9);aspect-ratio:16/9;}
+  video{width:100%;height:100%;display:block;background:#EFEEEA;}
+  .bar{position:fixed;left:0;right:0;bottom:0;display:flex;gap:10px;justify-content:center;padding:14px;pointer-events:none;}
+  .bar a,.bar button{pointer-events:auto;font:600 14px/1 inherit;font-family:inherit;color:#fff;background:rgba(52,82,255,.92);border:0;border-radius:999px;padding:11px 18px;text-decoration:none;cursor:pointer;opacity:.9}
+  .bar button{background:rgba(255,255,255,.14)}
+  .bar a:hover,.bar button:hover{opacity:1}
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <video id="v" src="intro.mp4" poster="poster.jpg" autoplay muted playsinline></video>
+  </div>
+  <div class="bar">
+    <button id="replay" type="button">다시 보기</button>
+    <a href="https://github.com/2dydgh">GitHub 보기 →</a>
+  </div>
+<script>
+  const v = document.getElementById('v');
+  document.getElementById('replay').onclick = () => { v.currentTime = 0; v.play(); };
+  v.play().catch(() => { v.controls = true; });   // if a browser blocks autoplay, show controls
+</script>
+</body>
+</html>
