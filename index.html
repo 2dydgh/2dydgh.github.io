@@ -4,33 +4,60 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>이용호 · AI Engineer</title>
-<meta name="description" content="이용호 — AI Engineer 포트폴리오 인트로">
+<meta name="description" content="모델을 만들고, 현장에서 쓰이게 합니다. — 이용호 AI Engineer 포트폴리오">
 <meta property="og:title" content="이용호 · AI Engineer">
 <meta property="og:description" content="모델을 만들고, 현장에서 쓰이게 합니다.">
-<meta property="og:image" content="poster.jpg">
+<meta property="og:image" content="https://2dydgh.github.io/poster.jpg">
 <style>
-  html,body{margin:0;height:100%;background:#0B0D14;}
-  body{display:flex;align-items:center;justify-content:center;font-family:system-ui,-apple-system,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;}
-  .wrap{position:relative;width:100%;max-width:calc(100vh * 16 / 9);aspect-ratio:16/9;}
-  video{width:100%;height:100%;display:block;background:#EFEEEA;}
-  .bar{position:fixed;left:0;right:0;bottom:0;display:flex;gap:10px;justify-content:center;padding:14px;pointer-events:none;}
-  .bar a,.bar button{pointer-events:auto;font:600 14px/1 inherit;font-family:inherit;color:#fff;background:rgba(52,82,255,.92);border:0;border-radius:999px;padding:11px 18px;text-decoration:none;cursor:pointer;opacity:.9}
-  .bar button{background:rgba(255,255,255,.14)}
-  .bar a:hover,.bar button:hover{opacity:1}
+  @font-face{font-family:Paperlogy;src:url(Paperlogy-5Medium.woff2) format("woff2");font-weight:500;font-display:swap}
+  @font-face{font-family:Paperlogy;src:url(Paperlogy-7Bold.woff2) format("woff2");font-weight:700;font-display:swap}
+  @font-face{font-family:Paperlogy;src:url(Paperlogy-8ExtraBold.woff2) format("woff2");font-weight:800;font-display:swap}
+  :root{--bg:#EFEEEA;--ink:#0B0D14;--muted:#6B6E78;--blue:#3452FF;--line:rgba(11,13,20,.12)}
+  *{box-sizing:border-box}
+  html,body{margin:0;background:var(--bg);color:var(--ink);font-family:Paperlogy,system-ui,-apple-system,"Apple SD Gothic Neo","Malgun Gothic",sans-serif}
+  main{max-width:1080px;margin:0 auto;padding:56px 24px 64px}
+  .top{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;margin-bottom:28px}
+  .label{font:500 13px/1 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.14em;color:var(--blue);margin:0 0 14px}
+  h1{margin:0;font-weight:800;font-size:clamp(34px,5vw,56px);line-height:1.1;letter-spacing:-.01em}
+  h1 span{color:var(--blue)}
+  .tag{margin:12px 0 0;color:var(--muted);font-weight:500;font-size:18px}
+  .links{display:flex;gap:10px;flex-wrap:wrap}
+  .links a{font-weight:700;font-size:15px;text-decoration:none;color:var(--ink);border:1.5px solid var(--ink);border-radius:999px;padding:11px 18px;transition:.15s}
+  .links a.primary{background:var(--blue);border-color:var(--blue);color:#fff}
+  .links a:hover{transform:translateY(-1px)}
+  .frame{position:relative;border-radius:22px;overflow:hidden;background:#fff;box-shadow:0 24px 60px rgba(20,24,40,.12),0 2px 6px rgba(20,24,40,.06)}
+  video{display:block;width:100%;height:auto;aspect-ratio:16/9;background:var(--bg)}
+  .sound{position:absolute;right:14px;bottom:14px;font:700 13px/1 Paperlogy,sans-serif;color:#fff;background:rgba(11,13,20,.7);border:0;border-radius:999px;padding:10px 14px;cursor:pointer;display:none}
+  .foot{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-top:18px;color:var(--muted);font-size:14px;font-weight:500}
+  .foot button{font:inherit;color:var(--ink);background:none;border:0;padding:0;cursor:pointer;text-decoration:underline;text-underline-offset:3px}
 </style>
 </head>
 <body>
-  <div class="wrap">
-    <video id="v" src="intro.mp4" poster="poster.jpg" autoplay muted playsinline></video>
+<main>
+  <div class="top">
+    <div>
+      <p class="label">AI ENGINEER PORTFOLIO</p>
+      <h1>이용호 <span>AI Engineer</span></h1>
+      <p class="tag">모델을 만들고, 현장에서 쓰이게 합니다.</p>
+    </div>
+    <nav class="links">
+      <a class="primary" href="https://github.com/2dydgh">GitHub 보기 →</a>
+    </nav>
   </div>
-  <div class="bar">
-    <button id="replay" type="button">다시 보기</button>
-    <a href="https://github.com/2dydgh">GitHub 보기 →</a>
+  <div class="frame">
+    <video id="v" src="intro.mp4" poster="poster.jpg" muted playsinline preload="auto"></video>
   </div>
+  <div class="foot">
+    <span>30초 소개 영상 · 비전 · 해양 · 안전 · 문서</span>
+    <button id="replay" type="button">처음부터 다시 보기</button>
+  </div>
+</main>
 <script>
   const v = document.getElementById('v');
+  // start playing only when the video is actually on screen
+  new IntersectionObserver(([e]) => { if (e.isIntersecting && v.paused && !v.ended) v.play().catch(() => { v.controls = true; }); }, { threshold: 0.5 }).observe(v);
   document.getElementById('replay').onclick = () => { v.currentTime = 0; v.play(); };
-  v.play().catch(() => { v.controls = true; });   // if a browser blocks autoplay, show controls
+  v.addEventListener('click', () => v.paused ? v.play() : v.pause());
 </script>
 </body>
 </html>
