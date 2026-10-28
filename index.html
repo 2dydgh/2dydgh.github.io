@@ -12,8 +12,9 @@
   @font-face{font-family:Paperlogy;src:url(Paperlogy-5Medium.woff2) format("woff2");font-weight:500;font-display:swap}
   @font-face{font-family:Paperlogy;src:url(Paperlogy-7Bold.woff2) format("woff2");font-weight:700;font-display:swap}
   @font-face{font-family:Paperlogy;src:url(Paperlogy-8ExtraBold.woff2) format("woff2");font-weight:800;font-display:swap}
-  :root{--bg:#EFEEEA;--ink:#0B0D14;--muted:#6B6E78;--blue:#3452FF;--line:rgba(11,13,20,.12)}
+  :root{--bg:#EFEEEA;--card:#F8F7F3;--ink:#0B0D14;--muted:#6B6E78;--blue:#3452FF;--line:rgba(11,13,20,.12)}
   *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
   html,body{margin:0;background:var(--bg);color:var(--ink);font-family:Paperlogy,system-ui,-apple-system,"Apple SD Gothic Neo","Malgun Gothic",sans-serif}
   main{max-width:1080px;margin:0 auto;padding:56px 24px 64px}
   .top{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;margin-bottom:28px}
@@ -22,14 +23,57 @@
   h1 span{color:var(--blue)}
   .tag{margin:12px 0 0;color:var(--muted);font-weight:500;font-size:18px}
   .links{display:flex;gap:10px;flex-wrap:wrap}
-  .links a{font-weight:700;font-size:15px;text-decoration:none;color:var(--ink);border:1.5px solid var(--ink);border-radius:999px;padding:11px 18px;transition:.15s}
-  .links a.primary{background:var(--blue);border-color:var(--blue);color:#fff}
-  .links a:hover{transform:translateY(-1px)}
-  .frame{position:relative;border-radius:22px;overflow:hidden;background:#fff;box-shadow:0 24px 60px rgba(20,24,40,.12),0 2px 6px rgba(20,24,40,.06)}
-  video{display:block;width:100%;height:auto;aspect-ratio:16/9;background:var(--bg)}
-  .sound{position:absolute;right:14px;bottom:14px;font:700 13px/1 Paperlogy,sans-serif;color:#fff;background:rgba(11,13,20,.7);border:0;border-radius:999px;padding:10px 14px;cursor:pointer;display:none}
+  .links a,.btn{font-weight:700;font-size:15px;text-decoration:none;color:var(--ink);border:1.5px solid var(--ink);border-radius:999px;padding:11px 18px;transition:.15s;display:inline-block}
+  .links a.primary,.btn.primary{background:var(--blue);border-color:var(--blue);color:#fff}
+  .links a:hover,.btn:hover{transform:translateY(-1px)}
+  .frame{position:relative;border-radius:22px;overflow:hidden;background:#fff;box-shadow:0 24px 60px rgba(20,24,40,.12),0 2px 6px rgba(20,24,40,.06);scroll-margin-top:24px}
+  video{display:block;width:100%;height:auto;aspect-ratio:16/9;background:var(--bg);cursor:pointer}
+
+  /* 챕터: 누르면 영상이 그 장면으로 */
+  .chapters{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-top:14px}
+  .chapters button{font:inherit;text-align:left;background:transparent;border:0;border-top:3px solid var(--line);padding:10px 2px 0;cursor:pointer;color:var(--muted);transition:color .15s,border-color .15s}
+  .chapters button b{display:block;font:600 12px/1 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.12em;margin-bottom:6px}
+  .chapters button span{font-size:14px;font-weight:700}
+  .chapters button:hover{color:var(--ink)}
+  .chapters button.on{color:var(--ink);border-top-color:var(--blue)}
+  .chapters button.on b{color:var(--blue)}
   .foot{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-top:18px;color:var(--muted);font-size:14px;font-weight:500}
   .foot button{font:inherit;color:var(--ink);background:none;border:0;padding:0;cursor:pointer;text-decoration:underline;text-underline-offset:3px}
+
+  /* 프로젝트 */
+  .projects{margin-top:96px}
+  .projects h2{margin:0 0 28px;font-weight:800;font-size:clamp(28px,4vw,40px);letter-spacing:-.01em}
+  .p{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:32px;align-items:center;padding:28px;border-radius:22px;background:var(--card);margin-bottom:18px}
+  .p .shot{display:block;border-radius:16px;overflow:hidden;aspect-ratio:900/830;background:#E4E3DE}
+  .p .shot img{display:block;width:100%;height:100%;object-fit:cover;transition:transform .3s}
+  .p .shot:hover img{transform:scale(1.02)}
+  .p .num{font:500 13px/1 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.14em;color:var(--blue);margin:0 0 10px}
+  .p h3{margin:0 0 6px;font-weight:800;font-size:clamp(24px,3vw,32px);line-height:1.2}
+  .p .name{margin:0 0 14px;font-weight:700;font-size:15px;color:var(--muted)}
+  .p .desc{margin:0 0 16px;font-weight:500;font-size:16px;line-height:1.7;color:#2C2E38}
+  .p .fact{margin:0 0 16px;padding:12px 14px;border-left:3px solid var(--blue);background:#fff;border-radius:0 10px 10px 0;font-weight:700;font-size:15px;line-height:1.6}
+  .p .fact em{font-style:normal;color:var(--blue)}
+  .p .chips{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 18px;padding:0;list-style:none}
+  .p .chips li{font-size:13px;font-weight:700;border:1.5px solid var(--line);border-radius:999px;padding:5px 11px;color:#3A3D48}
+  .p .chips li.pub{border-color:var(--ink);color:var(--ink)}
+  .p .acts{display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+  .p .acts a{font-weight:700;font-size:15px;color:var(--ink);text-decoration:none;border-bottom:2px solid var(--ink);padding-bottom:2px}
+  .p .acts button{font:inherit;font-weight:700;font-size:14px;color:var(--muted);background:none;border:0;padding:0;cursor:pointer}
+  .p .acts button:hover{color:var(--blue)}
+
+  .end{margin-top:80px;padding-top:28px;border-top:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+  .end p{margin:0;font-weight:800;font-size:22px}
+  .end p span{color:var(--blue)}
+  .end small{display:block;margin-top:6px;color:var(--muted);font-weight:500;font-size:13px}
+
+  @media (max-width:760px){
+    main{padding:36px 16px 48px}
+    .chapters{grid-template-columns:repeat(5,minmax(0,1fr));gap:6px}
+    .chapters button span{display:none}
+    .chapters button b{font-size:13px;margin:0}
+    .projects{margin-top:64px}
+    .p{grid-template-columns:1fr;gap:18px;padding:16px}
+  }
 </style>
 </head>
 <body>
@@ -44,13 +88,99 @@
       <a class="primary" href="https://github.com/2dydgh">GitHub 보기 →</a>
     </nav>
   </div>
-  <div class="frame">
-    <video id="v" src="intro.mp4" poster="poster.jpg" muted playsinline preload="auto"></video>
+
+  <div class="frame" id="film">
+    <video id="v" src="intro.mp4" poster="poster.jpg" muted playsinline preload="metadata"></video>
   </div>
+  <nav class="chapters" aria-label="영상 장면">
+    <button type="button" data-t="2.5"><b>01</b><span>Corner-Case-Bench</span></button>
+    <button type="button" data-t="7"><b>02</b><span>KD4SRSS</span></button>
+    <button type="button" data-t="11.5"><b>03</b><span>Maritime Sentry</span></button>
+    <button type="button" data-t="16"><b>04</b><span>Fall Detection</span></button>
+    <button type="button" data-t="20.5"><b>05</b><span>DocSuree</span></button>
+  </nav>
   <div class="foot">
-    <span>30초 소개 영상 · 비전 · 해양 · 안전 · 문서</span>
+    <span>30초 소개 영상 · Vision AI · Edge AI · Agentic AI</span>
     <button id="replay" type="button">처음부터 다시 보기</button>
   </div>
+
+  <section class="projects" id="projects">
+    <p class="label">PROJECTS</p>
+    <h2>영상 속 다섯 가지 작업</h2>
+
+    <article class="p">
+      <a class="shot" href="https://github.com/2dydgh/Corner-case-bench"><img src="img/project-01.jpg" alt="안개 속 자동차는 잡고 사람은 놓친 장면을 돋보기로 찾아낸 그림" loading="lazy"></a>
+      <div>
+        <p class="num">01 · ROBUSTNESS</p>
+        <h3>조용한 실패를 찾아냅니다</h3>
+        <p class="name">Corner-Case-Bench</p>
+        <p class="desc">InstructPix2Pix로 짙은 안개 · 폭우 · 역광 같은 코너 케이스를 합성하고, YOLOv8이 조건마다 얼마나 무너지는지 정량 평가하는 벤치마크입니다.</p>
+        <p class="fact">짙은 안개에서 객체 <em>76.7%</em>를 놓치는 동안 confidence는 <em>0.03</em>만 떨어졌습니다.</p>
+        <ul class="chips"><li>InstructPix2Pix</li><li>YOLOv8</li><li>Next.js</li></ul>
+        <div class="acts"><a href="https://github.com/2dydgh/Corner-case-bench">GitHub에서 보기 →</a><button type="button" data-t="2.5">▶ 영상 01 장면</button></div>
+      </div>
+    </article>
+
+    <article class="p">
+      <a class="shot" href="https://github.com/2dydgh/KD4SRSS"><img src="img/project-02.jpg" alt="큰 모델의 지식을 작은 모델로 옮겨 Jetson TX2에서 27 FPS로 돌리는 그림" loading="lazy"></a>
+      <div>
+        <p class="num">02 · LIGHTWEIGHT SEGMENTATION</p>
+        <h3>작게 만들고, 더 정확하게</h3>
+        <p class="name">KD4SRSS</p>
+        <p class="desc">초해상도와 지식 증류로 저해상도 영상의 장면 분할 성능을 높인 경량 모델 연구입니다.</p>
+        <p class="fact">mIoU <em>53% → 64%</em> (CamVid) · 파라미터 <em>14.7만</em> · Jetson TX2 <em>27 FPS</em></p>
+        <ul class="chips"><li class="pub">SCIE 1저자 · Applied Soft Computing</li><li>Knowledge Distillation</li><li>Super Resolution</li><li>Edge AI</li></ul>
+        <div class="acts"><a href="https://github.com/2dydgh/KD4SRSS">GitHub에서 보기 →</a><button type="button" data-t="7">▶ 영상 02 장면</button></div>
+      </div>
+    </article>
+
+    <article class="p">
+      <a class="shot" href="https://github.com/2dydgh/Maritime-OSINT-sentry"><img src="img/project-03.jpg" alt="쏟아지는 경보를 '지금 가장 위험한 N건' 보드로 정리한 그림" loading="lazy"></a>
+      <div>
+        <p class="num">03 · MARITIME C2</p>
+        <h3>알림 폭주를 우선순위로</h3>
+        <p class="name">Maritime Sentry</p>
+        <p class="desc">전 세계 3만+ 선박을 추적하며 충돌 위험 쌍을 "지금 가장 위험한 N건" 보드로 추리고, 로컬 LLM이 근거를 모아 권장합니다. 결정은 사람이 합니다.</p>
+        <p class="fact">48.8시간 동안 쏟아진 제안 <em>26,859건</em> 중 <em>99.97%</em>가 판단 전에 만료 → 경보 목록을 우선순위 보드로 다시 설계했습니다.</p>
+        <ul class="chips"><li>FastAPI</li><li>CesiumJS</li><li>PostGIS</li><li>XGBoost</li><li>Ollama</li></ul>
+        <div class="acts"><a href="https://github.com/2dydgh/Maritime-OSINT-sentry">GitHub에서 보기 →</a><button type="button" data-t="11.5">▶ 영상 03 장면</button></div>
+      </div>
+    </article>
+
+    <article class="p">
+      <a class="shot" href="https://github.com/2dydgh/Agentic-fall-detection-system"><img src="img/project-04.jpg" alt="낙상에서 무동작, 위험도로 이어지는 판정 경로를 돋보기로 따라가 HIGH가 나온 그림" loading="lazy"></a>
+      <div>
+        <p class="num">04 · SAFETY</p>
+        <h3>판정의 근거까지 추적합니다</h3>
+        <p class="name">Agentic Fall Detection</p>
+        <p class="desc">영상과 소리로 낙상을 감지하고, RDF/OWL 온톨로지와 Prolog 규칙으로 위험도를 판정해 발동한 규칙 ID를 근거로 함께 남깁니다.</p>
+        <p class="fact">온톨로지 개념 <em>38</em> · 관계 <em>9</em> · Prolog 규칙 <em>16</em> — 같은 입력이면 같은 판정</p>
+        <ul class="chips"><li>YOLO Pose</li><li>YAMNet</li><li>LangGraph</li><li>Prolog</li></ul>
+        <div class="acts"><a href="https://github.com/2dydgh/Agentic-fall-detection-system">GitHub에서 보기 →</a><button type="button" data-t="16">▶ 영상 04 장면</button></div>
+      </div>
+    </article>
+
+    <article class="p">
+      <a class="shot" href="https://github.com/2dydgh/Document-review-agent-system"><img src="img/project-05.jpg" alt="문서의 인용 줄을 돋보기로 확인하고 원문에 없는 지적을 버리는 그림" loading="lazy"></a>
+      <div>
+        <p class="num">05 · DOCUMENT REVIEW AGENT</p>
+        <h3>모델은 찾고, 코드가 검증합니다</h3>
+        <p class="name">DocSuree</p>
+        <p class="desc">모델이 낸 지적마다 원문 인용을 요구하고, 코드가 원문과 대조해 통과한 것만 리포트에 남기는 문서 검토 Agent입니다.</p>
+        <p class="fact">원문 인용 필수 · 문자열 대조 게이트 · <em>미검토는 미검토로</em></p>
+        <ul class="chips"><li>Python</li><li>FastAPI</li><li>vLLM · Qwen3</li></ul>
+        <div class="acts"><a href="https://github.com/2dydgh/Document-review-agent-system">GitHub에서 보기 →</a><button type="button" data-t="20.5">▶ 영상 05 장면</button></div>
+      </div>
+    </article>
+  </section>
+
+  <footer class="end">
+    <div>
+      <p>이용호 <span>AI Engineer</span></p>
+      <small>모델을 만들고, 현장에서 쓰이게 합니다.</small>
+    </div>
+    <a class="btn primary" href="https://github.com/2dydgh">GitHub 보기 →</a>
+  </footer>
 </main>
 <script>
   const v = document.getElementById('v');
@@ -58,6 +188,16 @@
   new IntersectionObserver(([e]) => { if (e.isIntersecting && v.paused && !v.ended) v.play().catch(() => { v.controls = true; }); }, { threshold: 0.5 }).observe(v);
   document.getElementById('replay').onclick = () => { v.currentTime = 0; v.play(); };
   v.addEventListener('click', () => v.paused ? v.play() : v.pause());
+  // chapters: jump to a scene; project buttons also scroll back up to the video
+  const chapters = [...document.querySelectorAll('.chapters button')];
+  const jump = (t) => { v.currentTime = t; v.play().catch(() => {}); };
+  chapters.forEach((b) => b.onclick = () => jump(+b.dataset.t));
+  document.querySelectorAll('.p .acts button').forEach((b) => b.onclick = () => { document.getElementById('film').scrollIntoView(); jump(+b.dataset.t); });
+  v.addEventListener('timeupdate', () => {
+    const i = chapters.findLastIndex((b) => v.currentTime >= +b.dataset.t);
+    const end = 25;   // 05 ends where the closing scene starts
+    chapters.forEach((b, k) => b.classList.toggle('on', k === i && v.currentTime < end));
+  });
 </script>
 </body>
 </html>
